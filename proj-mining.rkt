@@ -63,7 +63,7 @@
   (let* ([col (pivot-col M max)]
          [pivotcol (list-ref (transpose M) col)]
          [RHS (car (reverse (transpose M)))]
-         [ratios (build-list (length pivotcol) (lambda(e) (if(<= (list-ref pivotcol e) 0) +inf.0 (/ (list-ref RHS e) (list-ref pivotcol e)))))]
+         [ratios (build-list (length pivotcol) (lambda(row) (let ([piv (list-ref pivotcol row)]) (if(<= piv 0) +inf.0 (/ (list-ref RHS row) piv)))))]
          [row (if max (min-index ratios) (max-index ratios))])
     (when verbose (printf "pivotcol: ~a\nRHS: ~a\n\n" pivotcol RHS))
     (when verbose (printf "ratios: ~a\n\n" ratios))
